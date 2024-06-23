@@ -2,15 +2,11 @@ package com.accio.librarymanagementsystem.Models;
 
 import com.accio.librarymanagementsystem.Enum.Genre;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Book {
@@ -22,12 +18,60 @@ public class Book {
 
     private Integer NoOfPages;
 
+    public Integer getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(Integer bookId) {
+        this.bookId = bookId;
+    }
+
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
+
+    public Integer getNoOfPages() {
+        return NoOfPages;
+    }
+
+    public void setNoOfPages(Integer noOfPages) {
+        NoOfPages = noOfPages;
+    }
+
+    public Genre getGenre() {
+        return genre;
+    }
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
+    }
+
     @Enumerated(value = EnumType.STRING)
     private Genre genre;
 
-//    private Boolean isIssued;
+    private Boolean IsIssued;
 
     @JoinColumn
-    @OneToOne
+    @ManyToOne
     private Author author;
+
+    public Boolean getIssued() {
+        return IsIssued;
+    }
+
+    public void setIssued(Boolean issued) {
+        IsIssued = issued;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
 }

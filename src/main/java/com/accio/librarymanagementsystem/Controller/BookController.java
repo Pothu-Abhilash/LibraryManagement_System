@@ -1,11 +1,14 @@
 package com.accio.librarymanagementsystem.Controller;
 
+import com.accio.librarymanagementsystem.Enum.Genre;
 import com.accio.librarymanagementsystem.Models.Book;
 import com.accio.librarymanagementsystem.Service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("Book")
@@ -39,6 +42,26 @@ public class BookController {
             return new ResponseEntity<>(response,HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/findAllBooksOfAuthor")
+    public List<String> findAllBooksOfAuthor(@RequestParam("authorName") String authorName){
+
+
+            List<String> response = bookService.findAllBooksOfAuthor(authorName);
+            return response;
+
+
+    }
+
+    @GetMapping("/recommendHighestRatingInParticularGenre")
+    public ResponseEntity recommendHighestRatingInParticularGenre(Genre genre){
+        try {
+            Book response = bookService.recommendHighestRatingInParticularGenre(genre);
+            return new ResponseEntity(genre,HttpStatus.OK);
+        } catch (Exception e) {
+           return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
 }

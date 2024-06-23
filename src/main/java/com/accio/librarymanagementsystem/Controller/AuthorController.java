@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("Author")
 public class AuthorController {
@@ -32,5 +34,23 @@ public class AuthorController {
            return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    @GetMapping("/findAllAuthors")
+    public List<String> findAllAuthors(){
+        List<String> authors = authorService.findAllAuthors();
+        return authors;
+    }
+
+    @GetMapping("/maxBooksWrittenByAuthor")
+    public ResponseEntity maxBooksWrittenByAuthor(){
+
+        try {
+            String response = authorService.maxBooksWrittenByAuthor();
+            return new ResponseEntity(response, HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
     }
 }
